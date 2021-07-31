@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         WME HN2POI
-// @version      2020.02.05.01
+// @version      2021.07.31.01
 // @description  Converts HouseNumbers to POI
-// @author       turbopirate, Andrei Pavlenko
+// @author       turbopirate, Andrei Pavlenko, nicknick923/njs923
 // @include      /^https:\/\/(www|beta)\.waze\.com(\/\w{2,3}|\/\w{2,3}-\w{2,3}|\/\w{2,3}-\w{2,3}-\w{2,3})?\/editor\b/
 // @grant        none
 // @namespace https://greasyfork.org/users/166361
@@ -195,7 +195,6 @@
     const poi = new Landmark();
     poi.geometry = poiGeometry;
     poi.attributes.name = hn.number;
-    poi.attributes.houseNumber = hn.number;
     poi.attributes.categories.push('OTHER');
     poi.attributes.lockRank = getPointLockRank();
     addEntryPoint(poi);
@@ -209,6 +208,7 @@
       emptyCity: !1,
       streetName: addr.street.name,
       streetEmpty: !1,
+      houseNumber: hn.number
     };
 
     if (settings.noDuplicates && hasDuplicates(poi, addr))
@@ -226,7 +226,6 @@
     res.geometry = poiGeometry.clone();
     res.geometry.x += 5;
     res.attributes.residential = true;
-    res.attributes.houseNumber = hn.number;
     res.attributes.lockRank = getPointLockRank();
     addEntryPoint(res);
 
